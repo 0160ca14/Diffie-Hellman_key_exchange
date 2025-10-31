@@ -346,12 +346,12 @@ struct bigint {
 };
 
 
-bigint random_bigint(const int n){
+bigint random_bigint(const int bit_size){
     mt19937 rng(std::random_device{}());
 
-    string s;
-    for (int i = 0; i < n; i++) {
-        s += uniform_int_distribution<int>('0', '9')(rng);
+    string string_int;
+    for (int i = 0; i < bit_size; i++) {
+        string_int += uniform_int_distribution<int>('0', '9')(rng);
     }
-    return bigint(s);
+    return bigint(string_int);
 }

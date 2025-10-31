@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// A: Triển khai hàm lũy thừa mô-đun
 bigint modular_exponentiation(bigint base, bigint exponent, bigint mod){
     bigint result = 1;
     base = base % mod;
@@ -21,6 +22,12 @@ bigint modular_exponentiation(bigint base, bigint exponent, bigint mod){
     return result;
 }
 
+// B: Triển khai hàm sinh số nguyên tố ngẫu nhiên
+bigint generate_safe_prime(int bit_size){
+    bigint number = random_bigint(bit_size);
+
+    return number;
+}
 
 int main(){
     bigint base = random_bigint(1024);
