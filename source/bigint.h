@@ -345,7 +345,7 @@ struct bigint {
 
 
 bigint random_bigint(int n) {
-    mt19937 rng(1);
+    mt19937 rng(std::random_device{}());
 
     string s;
     for (int i = 0; i < n; i++) {
