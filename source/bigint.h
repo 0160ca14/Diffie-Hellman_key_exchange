@@ -342,9 +342,10 @@ struct bigint {
     }
 };
 
-mt19937 rng(1);
 
 bigint random_bigint(int n) {
+    mt19937 rng(1);
+
     string s;
     for (int i = 0; i < n; i++) {
         s += uniform_int_distribution<int>('0', '9')(rng);
