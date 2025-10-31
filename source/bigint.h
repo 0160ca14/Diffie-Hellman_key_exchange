@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iomanip>
 #include <random>
 
@@ -344,7 +346,7 @@ struct bigint {
 };
 
 
-bigint random_bigint(int n) {
+bigint random_bigint(const int n){
     mt19937 rng(std::random_device{}());
 
     string s;
