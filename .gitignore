@@ -42,3 +42,8 @@
 
 # Visual Studio Code specific folder
 .vscode/
+
+# Ignore build artifacts
+build/
+dist/
+target/
