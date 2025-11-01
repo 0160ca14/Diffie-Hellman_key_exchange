@@ -77,17 +77,26 @@ bool miller_rabin_test(const bigint& num, int rounds = 40){
 
 // Hàm sinh số nguyên tố lớn n bit 
 bigint generate_safe_prime(int bit_size){
-    if(bit_size < 2) return bigint(0);
-    if(bit_size == 2) return random_bigrange(2, 3);
+    if(bit_size <= 2) return bigint(0);
+    if(bit_size == 3){
+        mt19937 rng(std::random_device{}());
+        uniform_int_distribution<int> distribution(0, 1);
+
+        return bigint(5) + 2*distribution(rng);
+    }
 
     while(true){
-        bigint candidate = random_bigint(bit_size);
+        bigint candidate = random_bigint(bit_size - 1);
 
         // Nếu candidate là số chẵn thì biến nó thành số lẻ, điều này không làm tăng bit vì 2^bit_size - 1 là số lẻ
         if(candidate % 2 == 0) candidate += 1;
 
+        // Sàng số để loại bỏ các khả năng thừa, giảm thời gian chạy xuống một chút
+        if(candidate % 3 != 2 || candidate % 5 == 2 || candidate % 7 == 3) continue;
+
+
         // Kiểm tra Miller-Rabin
-        if(miller_rabin_test(candidate) == true) return candidate;
+        if(miller_rabin_test(candidate) && miller_rabin_test(candidate*2 + 1)) return candidate;
     }
 }
 

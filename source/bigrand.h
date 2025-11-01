@@ -37,9 +37,6 @@ bigint random_max_bits(const int bit_size){
 bigint random_bigrange(const bigint& a, const bigint& b){
     if(a == b) return a;
 
-    mt19937 rng(std::random_device{}());
-    uniform_int_distribution<int> distribution(0, 1);
-
     bigint range = b - a;
     int bit_length = range.bit_length();
 
