@@ -2,6 +2,7 @@
 
 #include <iomanip>
 #include <random>
+#include <cmath>
 
 #include "fft.h"
 
@@ -348,10 +349,15 @@ struct bigint {
 
 bigint random_bigint(const int bit_size){
     mt19937 rng(std::random_device{}());
+    uniform_int_distribution<int> distribution(0, 1);
 
-    string string_int;
-    for (int i = 0; i < bit_size; i++) {
-        string_int += uniform_int_distribution<int>('0', '9')(rng);
+    if(bit_size <= 0) return bigint(0);
+    if(bit_size == 1) return bigint(distribution(rng));
+
+    bigint result = 1;
+    for (int i = 0; i < bit_size - 1; i++) {
+        result = bigint(2)*result + distribution(rng);
     }
-    return bigint(string_int);
+    
+    return bigint(result);
 }

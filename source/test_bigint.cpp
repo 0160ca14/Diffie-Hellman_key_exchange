@@ -5,15 +5,15 @@
 #include "fft.h"
 
 int main() {
-    bigint x = bigint("120");
-    bigint y = bigint("5");
-    cout << x / y << endl;
+    bigint num = random_bigint(512);
 
-    cout << random_bigint(2048) << endl;
+    cout << num << endl;
 
-    bigint z = bigint(1);
-
-    cout << z << endl;
+    for(auto i: num.z){
+        cout << i << endl;
+    }
+    
+    cout << num.z.back() << endl;
 
     return 0;
 }
