@@ -344,20 +344,16 @@ struct bigint {
         res.trim();
         return res;
     }
-};
 
+    int bit_length(){
+        bigint temp = *this;
+        
+        int result = 0;
+        while(!temp.isZero()){
+            temp /= 2;
+            result++;
+        }
 
-bigint random_bigint(const int bit_size){
-    mt19937 rng(std::random_device{}());
-    uniform_int_distribution<int> distribution(0, 1);
-
-    if(bit_size <= 0) return bigint(0);
-    if(bit_size == 1) return bigint(distribution(rng));
-
-    bigint result = 1;
-    for (int i = 0; i < bit_size - 1; i++) {
-        result = bigint(2)*result + distribution(rng);
+        return result;
     }
-    
-    return bigint(result);
-}
+};
