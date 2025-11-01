@@ -29,7 +29,7 @@ bigint modular_exponentiation(bigint base, bigint exponent, bigint mod){
 // B: Triển khai hàm sinh số nguyên tố ngẫu nhiên
 
 // Kiểm tra Miller-Rabin (nó khó hiểu thật ;(( nên phải comment nhiều )
-bool miller_rabin_test(const bigint& num, int rounds = 40){
+bool miller_rabin_test(const bigint& num, int rounds = 10){
     // Xử lý các trường hợp với số nhỏ
     if(num == 2 || num == 3 || num == 5 || num == 7) return true;
     if(num <= 20) return false;
@@ -94,9 +94,11 @@ bigint generate_safe_prime(int bit_size){
         // Sàng số để loại bỏ các khả năng thừa, giảm thời gian chạy xuống một chút
         if(candidate % 3 != 2 || candidate % 5 == 2 || candidate % 7 == 3) continue;
 
+        // Số thực sự của ta
+        bigint true_candidate = candidate*2 + 1;
 
         // Kiểm tra Miller-Rabin
-        if(miller_rabin_test(candidate) && miller_rabin_test(candidate*2 + 1)) return candidate;
+        if(miller_rabin_test(candidate) && miller_rabin_test(true_candidate)) return true_candidate;
     }
 }
 
@@ -113,10 +115,10 @@ bigint generate_private_key(bigint p){
 int main(){
     // 1. Sinh số nguyên tố lớn p và phần tử sinh g
     int bit_size = 512; // Kích thước bit ví dụ, có thể điều chỉnh
-    bigint p = generate_safe_prime(512); // Chạy khá lâu, phải mất gần 1 phút mới ra
+    bigint p = generate_safe_prime(512); // Chạy khá lâu, phải mất gần vài phút mới ra
     int g = 7; // Phần tử sinh
 
-
+    cout << "Prime: " << p << endl;
     // 2. Sinh khóa riêng của Alice và Bob
     bigint a = generate_private_key(p);
     bigint b = generate_private_key(p);
