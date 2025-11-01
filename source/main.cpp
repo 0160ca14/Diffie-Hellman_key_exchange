@@ -94,22 +94,39 @@ bigint generate_safe_prime(int bit_size){
 
 
 // C: Triển khai hàm sinh khóa riêng ngẫu nhiên
+bigint generate_private_key(bigint p){
+    return random_bigrange(2, p - 2);
+}
 
 
+
+// D: Hoàn thành logic trao đổi khóa Diffie-Hellman
 int main(){
-    bigint base = random_bigint(1024);
-    bigint exponent = random_bigint(1024);
-    bigint mod = random_bigint(1024);
+    // 1. Sinh số nguyên tố lớn p và phần tử sinh g
+    int bit_size = 512; // Kích thước bit ví dụ, có thể điều chỉnh
+    bigint p = generate_safe_prime(512); // Chạy khá lâu, phải mất gần 1 phút mới ra
+    int g = 7; // Phần tử sinh
 
-    cout << "Base: " << base << endl;
-    cout << "Exponent: " << exponent << endl;
-    cout << "Mod: " << mod << endl;
 
-    cout << "Fast Powering:" << modular_exponentiation(base, exponent, mod) << endl;
+    // 2. Sinh khóa riêng của Alice và Bob
+    bigint a = generate_private_key(p);
+    bigint b = generate_private_key(p);
 
-    bigint prime = generate_safe_prime(1024);
 
-    cout << "Prime: " << prime << endl;
+    // 3. Tính giá trị công khai của Alice và Bob
+    bigint A = modular_exponentiation(g, a, p); // Alice tính A = g^a % p 
+    bigint B = modular_exponentiation(g, b, p); // Bob tính B = g^b % p
+
+
+    // 4. Tính bí mật chung
+    bigint alice_shared_secret = modular_exponentiation(B, a, p); // Alice tính s = B^a % p
+    bigint bob_shared_secret = modular_exponentiation(A, b, p); // Bob tính s = A^b % p
+
+
+    // 5. Hiển thị kết quả và xác minh rằng bí mật chung trùng khớp
+    std::cout << "Alice's shared secret: " << alice_shared_secret << endl;
+    std::cout << "Bob's shared secret: " << bob_shared_secret << endl;
+    std::cout << "Is the calculation process correct? " << (alice_shared_secret == bob_shared_secret) << endl;
 
     return 0;
 }
