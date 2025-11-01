@@ -118,7 +118,7 @@ int main(){
     bigint p = generate_safe_prime(512); // Chạy khá lâu, phải mất gần vài phút mới ra
     int g = 7; // Phần tử sinh
 
-    cout << "Prime: " << p << endl;
+
     // 2. Sinh khóa riêng của Alice và Bob
     bigint a = generate_private_key(p);
     bigint b = generate_private_key(p);
