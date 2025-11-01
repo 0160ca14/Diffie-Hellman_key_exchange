@@ -29,7 +29,7 @@ bigint modular_exponentiation(bigint base, bigint exponent, bigint mod){
 // B: Triển khai hàm sinh số nguyên tố ngẫu nhiên
 
 // Kiểm tra Miller-Rabin (nó khó hiểu thật ;(( nên phải comment nhiều )
-bool miller_rabin_test(const bigint& num, int rounds = 10){
+bool miller_rabin_test(const bigint& num, int rounds = 5){
     // Xử lý các trường hợp với số nhỏ
     if(num == 2 || num == 3 || num == 5 || num == 7) return true;
     if(num <= 20) return false;
